@@ -140,21 +140,3 @@ exports.products_delete = (req, res, next) => {
     });
 };
 
-exports.products_search_product = async (req, res, next) => {
-  let product;
-  const key = req.params.productId;
-  try {
-      product = await Product.find({
-          "$or": [
-
-              {"name":{ $regex : new RegExp(key, "i" ) }},
-          
-          ]})
-  } catch (error) {
-      console.log(error)
-  }
-  if(!product){
-      return res.status(404).json({message: "No such product!!🤔"})
-  }
-  return res.status(200).json({ product: product })
-}
